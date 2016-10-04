@@ -1,6 +1,6 @@
 # stuffs
 
-Some stuffs which i used in every project for Crystal.
+Some stuffs which i used in every project for Crystal. Mini ActiveSupport.
 
 ## Installation
 
@@ -20,3 +20,7 @@ dependencies:
 ```crystal
 require "stuffs"
 ```
+
+### List of stuffs 
+
+https://github.com/kostya/stuffs/blob/master/src/stuffs.cr
