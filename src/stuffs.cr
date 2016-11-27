@@ -76,3 +76,31 @@ macro include_constants(type)
     {{constant}} = {{type}}::{{constant}}
   {% end %}
 end
+
+class URI
+  # URL-encode a string into a URI safe structure
+  def self.escape_uri_safe(string : String) : String
+    String.build { |io| escape2(string, io, false, true) { |byte| byte } }
+  end
+
+  # URL-encode a string and write the result to an `IO`.
+  #
+  # This method requires block.
+  private def self.escape2(string : String, io : IO, space_to_plus = false, uri_safe = false, &block)
+    string.each_byte do |byte|
+      char = byte.unsafe_chr
+      if char == ' ' && space_to_plus
+        io.write_byte '+'.ord.to_u8
+      elsif reserved?(byte) && uri_safe
+        io.write_byte byte
+      elsif char.ascii? && yield(byte) && (!space_to_plus || char != '+')
+        io.write_byte byte
+      else
+        io.write_byte '%'.ord.to_u8
+        io.write_byte '0'.ord.to_u8 if byte < 16
+        byte.to_s(16, io, upcase: true)
+      end
+    end
+    io
+  end
+end
