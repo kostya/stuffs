@@ -1,7 +1,9 @@
 name: stuffs
-version: 0.5
+version: 0.6
 
 authors:
   - Konstantin Makarchev <kostya27@gmail.com>
+
+crystal: ">= 1.0.0"
 
 license: MIT
